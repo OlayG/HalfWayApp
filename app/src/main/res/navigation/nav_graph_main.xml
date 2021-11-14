@@ -12,6 +12,22 @@
         android:id="@+id/fragment_main"
         android:name="com.olayg.halfwayapp.view.FragmentMain"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_fragment_main_to_fragment_detail"
+            app:destination="@id/fragment_detail">
+
+            <argument
+                android:name="character"
+                app:argType="com.olayg.halfwayapp.model.custom.Character" />
+
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_detail"
+        android:name="com.olayg.halfwayapp.view.FragmentDetail"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail"/>
 
 </navigation>

@@ -1,24 +1,23 @@
 package com.olayg.halfwayapp.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import com.olayg.halfwayapp.R
-import com.olayg.halfwayapp.adapter.CharacterAdapter
-import com.olayg.halfwayapp.databinding.FragmentMainBinding
+import com.olayg.halfwayapp.databinding.FragmentDetailBinding
 import com.olayg.halfwayapp.model.custom.Character
 import com.olayg.halfwayapp.viewmodel.SSBViewModel
 
-class FragmentMain : Fragment() {
+class FragmentDetail : Fragment() {
 
-    private var _binding: FragmentMainBinding? = null
+    private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
+
+    private var _character: Character? = null
+    private val character get() = _character!!
 
     private val viewModel by activityViewModels<SSBViewModel>()
 
@@ -28,23 +27,25 @@ class FragmentMain : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
 
-    ): View = FragmentMainBinding.inflate(
+    ): View = FragmentDetailBinding.inflate(
 
         layoutInflater,
         container,
         false
 
-    ).also { _binding = it }.root
+    ).also {
+
+        _binding = it
+
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.characters.observe(viewLifecycleOwner) { characters ->
+        _character = arguments?.getParcelable("character")
 
-            binding.rvCharacters.adapter = CharacterAdapter(characters, ::characterSelected)
-
-        }
+        Log.d("DEBUG_INFO", character.name)
 
     }
 
@@ -53,14 +54,7 @@ class FragmentMain : Fragment() {
         super.onDestroyView()
 
         _binding = null
-
-    }
-
-    private fun characterSelected(character: Character) {
-
-        val action = FragmentMainDirections.actionFragmentMainToFragmentDetail(character)
-
-        findNavController().navigate(action)
+        _character = null
 
     }
 
