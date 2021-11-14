@@ -6,6 +6,6 @@ import com.olayg.halfwayapp.repo.SSBRepo
 
 class SSBViewModel : ViewModel() {
 
-    val categories = liveData { emit(SSBRepo.getAllCharacters()) }
+    val characters = liveData { emit(SSBRepo.getAllCharacters()) }
 
 }

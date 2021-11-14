@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.categories.observe(this) { characters ->
+        viewModel.characters.observe(this) { characters ->
             binding.rvCharacters.adapter = CharacterAdapter(characters, ::characterSelected)
         }
     }
