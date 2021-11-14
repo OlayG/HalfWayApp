@@ -30,6 +30,7 @@ class CharacterAdapter(
 
         fun loadCharacter(character: Character) = with(binding) {
             tvName.text = character.name
+            ivPhoto.loadUrl(character.image?.icon)
         }
 
         companion object {
