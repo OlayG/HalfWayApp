@@ -18,7 +18,11 @@ object SSBRepo {
     }
 
     private suspend fun getImage(character: CharacterResponse) = try {
-        smashBrosUnofficialService.getAllCharacters(character.name).firstOrNull()?.image
+        var name = character.name
+        if (name == "Mr. Game And Watch") {
+            name = "Mr. Game & Watch"
+        }
+        smashBrosUnofficialService.getAllCharacters(name).firstOrNull()?.image
     } catch (ex: Exception) {
         null
     }
