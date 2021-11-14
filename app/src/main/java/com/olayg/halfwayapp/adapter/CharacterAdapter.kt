@@ -22,7 +22,7 @@ class CharacterAdapter(
         holder.loadCharacter(characters[position])
     }
 
-    override fun getItemCount() = characters.size.minus(characters.size)
+    override fun getItemCount() = characters.size
 
     class CharacterViewHolder(
         private val binding: ItemCharacterBinding
