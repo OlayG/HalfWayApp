@@ -8,12 +8,12 @@ object RetrofitInstance {
     private const val BASE_URL_SMASH_LOUNGE = "http://smashlounge.com"
     private const val BASE_URL_SMASH_BROS_UNOFFICIAL = "https://smashbros-unofficial-api.vercel.app"
 
-    private val smashLoungeRetrofit = Retrofit.Builder()
+    private val smashLoungeRetrofit : Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL_SMASH_LOUNGE)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
-    private val smashBrosUnofficialRetrofit = Retrofit.Builder()
+    private val smashBrosUnofficialRetrofit : Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL_SMASH_BROS_UNOFFICIAL)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
