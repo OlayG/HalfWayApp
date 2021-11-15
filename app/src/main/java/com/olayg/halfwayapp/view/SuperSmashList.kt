@@ -14,16 +14,6 @@ import com.olayg.halfwayapp.databinding.FragmentSuperSmashListBinding
 import com.olayg.halfwayapp.model.custom.Character
 import com.olayg.halfwayapp.viewmodel.SSBViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SuperSmashList.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SuperSmashList : Fragment() {
     private var _binding: FragmentSuperSmashListBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +43,9 @@ class SuperSmashList : Fragment() {
         }
     }
 
-    private fun characterSelected(character: Character) {
+    private fun characterSelected(character: Character) = with(findNavController()) {
+        val action = SuperSmashListDirections.actionSuperSmashListFragmentToSuperSmashInfoFragment(character)
+        navigate(action)
     }
 
 }
