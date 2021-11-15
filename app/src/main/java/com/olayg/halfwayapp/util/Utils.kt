@@ -1,5 +1,6 @@
 package com.olayg.halfwayapp.util
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,5 +13,5 @@ fun ImageView.loadUrl(url: String?) {
 }
 
 fun String.logMe(){
-
+    Log.d("SmashAppTag", this)
 }
