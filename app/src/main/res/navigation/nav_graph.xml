@@ -8,8 +8,21 @@
     <fragment
         android:id="@+id/superSmashListFragment"
         android:name="com.olayg.halfwayapp.view.SuperSmashList"
-        android:label="fragment_category"
+        android:label="fragment_character_list"
         tools:layout="@layout/fragment_super_smash_list">
+        <action
+            android:id="@+id/action_superSmashListFragment_to_superSmashInfoFragment"
+            app:destination="@id/superSmashInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/superSmashInfoFragment"
+        android:name="com.olayg.halfwayapp.view.SuperSmashInfo"
+        android:label="fragment_character_info"
+        tools:layout="@layout/fragment_super_smash_info">
+        <argument
+            android:name="characterInfo"
+            app:argType="com.olayg.halfwayapp.model.custom.Character" />
     </fragment>
 
 </navigation>
