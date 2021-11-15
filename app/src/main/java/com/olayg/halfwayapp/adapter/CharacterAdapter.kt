@@ -31,8 +31,8 @@ class CharacterAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun loadCharacter(character: Character) = with(binding) {
-            ivPhoto.loadUrl(character.image?.portrait)
             tvName.text = character.name
+            ivPhoto.loadUrl(character.image?.icon)
         }
 
         companion object {

@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface SmashLoungeService {
 
-    @GET("chars/all")
+    @GET("/api/chars/all")
     suspend fun getAllCharacters(): List<CharacterResponse>
 }

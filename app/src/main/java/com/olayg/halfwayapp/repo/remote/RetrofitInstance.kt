@@ -5,8 +5,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
 
-    private const val BASE_URL_SMASH_LOUNGE = "http://smashlounge.com/api/"
-    private const val BASE_URL_SMASH_BROS_UNOFFICIAL = "https://smashbros-unofficial-api.vercel.app/api/v1/"
+    private const val BASE_URL_SMASH_LOUNGE = "http://smashlounge.com"
+    private const val BASE_URL_SMASH_BROS_UNOFFICIAL = "https://smashbros-unofficial-api.vercel.app"
 
     private val smashLoungeRetrofit = Retrofit.Builder()
         .baseUrl(BASE_URL_SMASH_LOUNGE)
