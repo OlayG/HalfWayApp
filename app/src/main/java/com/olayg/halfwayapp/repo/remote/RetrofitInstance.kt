@@ -2,6 +2,7 @@ package com.olayg.halfwayapp.repo.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 
 object RetrofitInstance {
 
@@ -18,9 +19,8 @@ object RetrofitInstance {
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
-    val smashLoungeService: SmashLoungeService =
-        smashLoungeRetrofit.create(SmashLoungeService::class.java)
+    val smashLoungeService: SmashLoungeService = smashLoungeRetrofit.create()
 
     val smashBrosUnofficialService: SmashBrosUnofficialService =
-        smashBrosUnofficialRetrofit.create(SmashBrosUnofficialService::class.java)
+        smashBrosUnofficialRetrofit.create()
 }
