@@ -42,9 +42,10 @@ class CharacterAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         private val TAG = "CharacterAdapter"
         fun loadCharacter(character: Character) = with(binding) {
+            val iconUrl = if (character.name == "Mr. Game And Watch") "https://pm1.narvii.com/6128/0aa7ca2a64dcfd893eb97ac36d3ce6c99b755b81_hq.jpg" else character.image?.icon
             tvName.text = character.name
-            ivIcon.loadUrl(character.image?.icon)
-            Log.d(TAG, "loadCharacter: {${character.name}}")
+            ivIcon.loadUrl(iconUrl)
+            Log.d(TAG, "loadCharacter: {$iconUrl}")
         }
 
 
