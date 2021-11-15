@@ -39,5 +39,5 @@ data class Gif(
     val typeId: String,
     @Json(name = "updated_at")
     val updatedAt: String,
-    val url: String
+    var url: String
 ) : Parcelable

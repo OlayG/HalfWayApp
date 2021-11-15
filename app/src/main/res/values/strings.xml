@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HalfWayApp</string>
+    <string name="no_data_available">Sorry, no GIF\'s found for this Super Smash Bro</string>
+    <string name="back">back</string>
 </resources>
