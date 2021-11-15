@@ -10,3 +10,7 @@ val ViewGroup.layoutInflater: LayoutInflater get() = LayoutInflater.from(context
 fun ImageView.loadUrl(url: String?) {
     Glide.with(this).load(url).into(this)
 }
+
+fun String.logMe(){
+
+}
