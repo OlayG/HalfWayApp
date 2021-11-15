@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface SmashBrosUnofficialService {
 
 
-    @GET("/api/v1/ultimate/characters")
+    @GET("ultimate/characters")
     suspend fun getAllCharacters(
         @Query("name") name: String
     ): List<CharacterImageResponse>
