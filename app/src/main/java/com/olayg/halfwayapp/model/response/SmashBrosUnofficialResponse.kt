@@ -11,7 +11,8 @@ import kotlinx.parcelize.Parcelize
 data class CharacterImageResponse(
     val name: String,
     @Json(name = "images")
-    val image: Image
+    val image: Image,
+    val series: Series
 ) : Parcelable
 
 @JsonClass(generateAdapter = true)
@@ -19,4 +20,10 @@ data class CharacterImageResponse(
 data class Image(
     val icon: String,
     val portrait: String
+) : Parcelable
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class Series(
+    val icon: String,
+    val name: String
 ) : Parcelable
