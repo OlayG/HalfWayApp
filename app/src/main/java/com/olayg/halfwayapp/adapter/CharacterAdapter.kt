@@ -7,6 +7,7 @@ import com.olayg.halfwayapp.model.custom.Character
 import com.olayg.halfwayapp.util.layoutInflater
 import com.olayg.halfwayapp.util.loadUrl
 
+
 class CharacterAdapter(
     private val characters: List<Character>,
     private val selectedCharacter: (Character) -> Unit

@@ -3,6 +3,7 @@ package com.olayg.halfwayapp.repo
 import com.olayg.halfwayapp.model.custom.Character
 import com.olayg.halfwayapp.model.response.CharacterResponse
 import com.olayg.halfwayapp.repo.remote.RetrofitInstance
+import com.olayg.halfwayapp.util.logMe
 
 object SSBRepo {
 
@@ -11,6 +12,7 @@ object SSBRepo {
 
     suspend fun getAllCharacters() = try {
         smashLoungeService.getAllCharacters().map { characterResponse ->
+            characterResponse.toString().logMe()
             Character.convertToCharacter(characterResponse, getImage(characterResponse))
         }
     } catch (ex: Exception) {
