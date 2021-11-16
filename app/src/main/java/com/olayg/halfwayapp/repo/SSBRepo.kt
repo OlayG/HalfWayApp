@@ -4,29 +4,115 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import androidx.datastore.dataStoreFile
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.olayg.halfwayapp.model.custom.Character
 import com.olayg.halfwayapp.model.response.CharacterResponse
 import com.olayg.halfwayapp.model.response.Gif
 import com.olayg.halfwayapp.model.response.Image
 import com.olayg.halfwayapp.repo.remote.RetrofitInstance
+import kotlinx.coroutines.flow.first
 
 object SSBRepo {
 
     private val smashBrosUnofficialService by lazy { RetrofitInstance.smashBrosUnofficialService }
     private val smashLoungeService by lazy { RetrofitInstance.smashLoungeService }
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "characters")
+
+    private suspend fun dataStoreSave(ds : DataStore<Preferences>) :List<Character>{
+
+        val newList = repo()
+        val size: Int = newList.size
+        var nameList : String = ""
+
+        for (i in 0 until size){
+            nameList = nameList+newList[i].name+","
+        }
+
+        ds.edit {
+        it[intPreferencesKey("size")]= size
+        it[stringPreferencesKey("nameList")]=nameList}
+        for (index in 0 until size){
+            val saverName = newList[index].name.toString()
+            ds.edit {
+
+
+                it[stringPreferencesKey(saverName+"name")] = newList[index].name.toString()
+                Log.d("DS SAVING", newList[index].name.toString())
+                        it[stringPreferencesKey(saverName+"icon")] = newList[index].image?.icon.toString()
+                val sizeG = newList[index].gifs.size
+                it[intPreferencesKey(saverName+"gifSize")] = sizeG
+                for (indexG in 0 until sizeG){
+                    it[stringPreferencesKey(saverName+"url")] = newList[index].gifs[indexG]?.url.toString()
+                    it[stringPreferencesKey(saverName+"description")] = newList[index].gifs[indexG]?.description.toString()
+                }
+            }
+        }
+        return newList
+
+
+    }
+
+    private suspend fun dataStoreRead(size:Int, ds: DataStore<Preferences>) : List<Character>{
+        val preferences = ds.data.first()
+
+
+
+        val newList = mutableListOf<Character>()
+        Log.d("DS SAVING","DS LOADING")
+
+
+        val names = preferences[stringPreferencesKey("nameList")]!!.split(",")
+        ds.edit {
+            for(index in 0 until size)
+            {
+                val gifs = mutableListOf<Gif>()
+                val sizeG = preferences[intPreferencesKey(names[index]+"gifSize")]
+                for(indexG in 0 until sizeG!!){
+                    val url = preferences[stringPreferencesKey(names[index]+"url")]
+                    val desc = preferences[stringPreferencesKey(names[index]+"description")]
+                    val gif = Gif(url!!,desc!!)
+                    gifs.add(gif)
+                }
+
+                val image = Image(preferences[stringPreferencesKey(names[index]+"icon")]!!, "na")
+                val name = preferences[stringPreferencesKey(names[index]+"name")]
+                Log.d("DS SAVING","DS LOADING "+name)
+                val char = Character(name,image,"na","na","na",gifs)
+                newList.add(char)
+            }
+        }
+
+        return newList
+    }
 
     suspend fun getAllCharacters(application: Application) : List<Character> {
         Log.d("Repo","getImage")
-        val sharedPreferences: SharedPreferences =
+        val dataStore = application.applicationContext.dataStore
+        val pizza  = preferencesDataStore(name = "characters")
+
+        /*val sharedPreferences: SharedPreferences =
             application.getSharedPreferences("share", Context.MODE_PRIVATE)!!
-        val size: Int = sharedPreferences.getInt("size", 0)
+        val size: Int = sharedPreferences.getInt("size", 0)*/
+        var size : Int = 0
+        val preferences = dataStore.data.first()
+        dataStore.edit { size = preferences[intPreferencesKey("size")]?:0 }
+
         if (size == 0){
             Log.d("SAVING", "Nothing Saved yet")
-            return saveData(application)
+            //return saveData(application)
+            return dataStoreSave(dataStore)
         }
         else{
             Log.d("SAVING", size.toString())
-            return loadData(size,application)
+            //return loadData(size,application)
+            return dataStoreRead(size,dataStore)
         }
     }
 
