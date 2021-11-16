@@ -9,5 +9,18 @@
         android:id="@+id/characterListFragment"
         android:name="com.olayg.halfwayapp.view.CharacterListFragment"
         android:label="fragment_character_list"
-        tools:layout="@layout/fragment_character_list" />
+        tools:layout="@layout/fragment_character_list" >
+        <action
+            android:id="@+id/goToGifList"
+            app:destination="@id/gifListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gifListFragment"
+        android:name="com.olayg.halfwayapp.view.GifListFragment"
+        android:label="fragment_gif_list"
+        tools:layout="@layout/fragment_gif_list" >
+        <argument
+            android:name="character"
+            app:argType="com.olayg.halfwayapp.model.custom.Character" />
+    </fragment>
 </navigation>

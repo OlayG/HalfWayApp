@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.olayg.halfwayapp.R
+import androidx.navigation.fragment.findNavController
 import com.olayg.halfwayapp.adapter.CharacterAdapter
 import com.olayg.halfwayapp.databinding.FragmentCharacterListBinding
 import com.olayg.halfwayapp.model.custom.Character
+import com.olayg.halfwayapp.util.logMe
 import com.olayg.halfwayapp.viewmodel.SSBViewModel
 
 class CharacterListFragment : Fragment() {
@@ -46,6 +46,8 @@ class CharacterListFragment : Fragment() {
         }
     }
 
-    private fun characterSelected(character: Character) {
+    private fun characterSelected(character: Character) = with(findNavController()) {
+        "characterSelected $character".logMe()
+        navigate(CharacterListFragmentDirections.goToGifList(character))
     }
 }

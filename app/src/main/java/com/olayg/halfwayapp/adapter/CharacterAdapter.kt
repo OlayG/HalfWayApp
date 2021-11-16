@@ -1,6 +1,5 @@
 package com.olayg.halfwayapp.adapter
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.olayg.halfwayapp.databinding.ItemCharacterBinding
