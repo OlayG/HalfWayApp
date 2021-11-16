@@ -1,5 +1,6 @@
 package com.olayg.halfwayapp.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,14 @@ class FragmentMain : Fragment() {
 
     private val viewModel by activityViewModels<SSBViewModel>()
 
+    private val sharedPreferences by lazy { activity?.getSharedPreferences("PREFERENCES", Context.MODE_PRIVATE) }
+
+    private lateinit var characters: List<Character>
+
+    private lateinit var names: MutableList<String>
+    private lateinit var portraits: MutableList<String>
+    private lateinit var gifs: MutableList<String>
+
     override fun onCreateView(
 
         inflater: LayoutInflater,
@@ -40,9 +49,35 @@ class FragmentMain : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.characters.observe(viewLifecycleOwner) { characters ->
+        names = (sharedPreferences?.getString("NAMES", null)?.split(", ") ?: mutableListOf()) as MutableList<String>
+        portraits = (sharedPreferences?.getString("PORTRAITS", null)?.split(", ") ?: mutableListOf()) as MutableList<String>
+        gifs = (sharedPreferences?.getString("GIFS", null)?.split(", ") ?: mutableListOf()) as MutableList<String>
 
-            binding.rvCharacters.adapter = CharacterAdapter(characters, ::characterSelected)
+        if (names.isNotEmpty() && portraits.isNotEmpty())
+            binding.rvCharacters.adapter = CharacterAdapter(names, portraits, ::characterSelected)
+
+        else viewModel.characters.observe(viewLifecycleOwner) {
+
+            characters = it
+
+            it.forEach { character ->
+
+                names.add(character.name)
+                portraits.add(character.image?.portrait.toString())
+
+            }
+
+            binding.rvCharacters.adapter = CharacterAdapter(names, portraits, ::characterSelected)
+
+            with (sharedPreferences?.edit()) {
+
+                this?.putString("NAMES", names.joinToString(", "))
+                this?.putString("PORTRAITS", portraits.joinToString(", "))
+                this?.apply()
+
+            }
+
+            viewModel.characters.removeObservers(viewLifecycleOwner)
 
         }
 
@@ -56,9 +91,9 @@ class FragmentMain : Fragment() {
 
     }
 
-    private fun characterSelected(character: Character) {
+    private fun characterSelected(character: Int) {
 
-        val action = FragmentMainDirections.actionFragmentMainToFragmentDetail(character)
+        val action = FragmentMainDirections.actionFragmentMainToFragmentDetail(characters[character])
 
         findNavController().navigate(action)
 

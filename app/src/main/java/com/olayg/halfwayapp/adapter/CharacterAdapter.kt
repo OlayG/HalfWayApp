@@ -8,29 +8,30 @@ import com.olayg.halfwayapp.util.layoutInflater
 import com.olayg.halfwayapp.util.loadUrl
 
 class CharacterAdapter(
-    private val characters: List<Character>,
-    private val selectedCharacter: (Character) -> Unit
+    private val names: List<String>,
+    private val portraits: List<String>,
+    private val selectedCharacter: (Int) -> Unit
 ) : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ) = CharacterViewHolder.getInstance(parent).apply {
-        itemView.setOnClickListener { selectedCharacter(characters[adapterPosition]) }
+        itemView.setOnClickListener { selectedCharacter(adapterPosition) }
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.loadCharacter(characters[position])
+        holder.loadCharacter(names[position], portraits[position])
     }
 
-    override fun getItemCount() = characters.size
+    override fun getItemCount() = names.size
 
     class CharacterViewHolder(
         private val binding: ItemCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun loadCharacter(character: Character) = with(binding) {
-            ivPhoto.loadUrl(character.image?.portrait)
-            tvName.text = character.name
+        fun loadCharacter(name: String, portrait: String) = with(binding) {
+            tvName.text = name
+            ivPhoto.loadUrl(portrait)
         }
 
         companion object {
