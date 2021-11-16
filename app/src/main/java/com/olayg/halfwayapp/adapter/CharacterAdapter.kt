@@ -7,7 +7,7 @@ import com.olayg.halfwayapp.databinding.ItemCharacterBinding
 import com.olayg.halfwayapp.model.custom.Character
 import com.olayg.halfwayapp.util.layoutInflater
 import com.olayg.halfwayapp.util.loadUrl
-import kotlin.math.log
+
 
 class CharacterAdapter(
     private val characters: List<Character>,
