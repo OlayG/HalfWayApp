@@ -40,4 +40,9 @@ data class Gif(
     @Json(name = "updated_at")
     val updatedAt: String,
     val url: String
-) : Parcelable
+) : Parcelable {
+    constructor(url: String,description: String) : this("na","na",description,
+        "na","na","na","na","na","na",url) {
+
+    }
+}
