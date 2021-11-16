@@ -8,7 +8,7 @@ import com.olayg.halfwayapp.util.layoutInflater
 import com.olayg.halfwayapp.util.loadUrl
 
 class GfyAdapter(
-    private val gifs: List<Gif>,
+    private val gifs: List<String>,
 ) : RecyclerView.Adapter<GfyAdapter.GfyViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -25,8 +25,8 @@ class GfyAdapter(
         private val binding: ItemGifBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun loadGif(gif: Gif) = with(binding) {
-            ivGif.loadUrl(gif.url)
+        fun loadGif(url: String) = with(binding) {
+            ivGif.loadUrl(url)
         }
 
         companion object {
