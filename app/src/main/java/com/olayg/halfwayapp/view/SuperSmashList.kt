@@ -44,7 +44,10 @@ class SuperSmashList : Fragment() {
 
     private fun characterSelected(character: Character) = with(findNavController()) {
         lifecycleScope.launch {
-            context?.let { DataStorePref(it) }?.setCharStringData(character.name, character.guide)
+            character.gifs?.map { it.url }?.let {
+                context?.let { context -> DataStorePref(context) }
+                    ?.setCharStringData(character.name, character.guide, it.toSet())
+            }
             val action =
                 SuperSmashListDirections.actionSuperSmashListFragmentToSuperSmashInfoFragment(
                     character

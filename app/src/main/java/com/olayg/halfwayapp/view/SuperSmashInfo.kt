@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.datastore.dataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -37,13 +38,13 @@ class SuperSmashInfo : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        rvGifs.adapter = args.characterInfo.gifs?.let { GfyAdapter(it) }
         if (args.characterInfo.gifs.isNullOrEmpty()) {
             rvGifs.isVisible = false
             tvEmptyGifs.isVisible = true
         }
         val dataStore = context?.let { DataStorePref(it) }
         lifecycleScope.launch {
+        rvGifs.adapter = dataStore?.getCharGifList()?.toList()?.let { GfyAdapter(it) }
             tvName.text = dataStore?.getCharName()
             tvDescription.text = dataStore?.getCharGuide()
         }
