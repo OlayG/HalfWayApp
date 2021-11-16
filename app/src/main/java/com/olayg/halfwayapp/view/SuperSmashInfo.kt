@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.olayg.halfwayapp.adapter.GfyAdapter
 import com.olayg.halfwayapp.databinding.FragmentSuperSmashInfoBinding
+import com.olayg.halfwayapp.repo.local.DataStorePref
+import kotlinx.coroutines.launch
 
 class SuperSmashInfo : Fragment() {
     private var _binding: FragmentSuperSmashInfoBinding? = null
@@ -39,8 +42,11 @@ class SuperSmashInfo : Fragment() {
             rvGifs.isVisible = false
             tvEmptyGifs.isVisible = true
         }
-        tvName.text = args.characterInfo.name
-        tvDescription.text = args.characterInfo.guide
+        val dataStore = context?.let { DataStorePref(it) }
+        lifecycleScope.launch {
+            tvName.text = dataStore?.getCharName()
+            tvDescription.text = dataStore?.getCharGuide()
+        }
         btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
